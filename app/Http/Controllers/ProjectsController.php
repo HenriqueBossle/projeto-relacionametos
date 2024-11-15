@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Projects;
 use Illuminate\Http\Request;
-
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class ProjectsController extends Controller
 {
     public function index()
     {
-        $project = Projects::all();
-        return view('projects.index', compact('project'));
+        $projects = Projects::all();
+        return view('projects.index', compact('projects'));
+
     }
 
     public function create()
@@ -21,8 +23,11 @@ class ProjectsController extends Controller
 
     public function store(Request $request)
     {
-        Projects::create($request->all());
-        return redirect('projects')->with('success', 'project created successfully.');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'value' => 'required|numeric',
+            'client_id' => 'required|exists:clients,id',
+        ]);
     }
 
     public function edit($id)
@@ -34,8 +39,12 @@ class ProjectsController extends Controller
     public function update(Request $request, $id)
     {
         $project = Projects::findOrFail($id);
-        $project->update($request->all());
-        return redirect('projects')->with('success', 'projects updated successfully.');
+        $project->update($request->validate([
+        'name' => 'required|string|max:255',
+        'value' => 'required|numeric',
+        'client_id' => 'required|exists:clients,id',
+    ]));
+        return redirect('projects.index')->with('success', 'projects updated successfully.');
     }
 
     public function destroy($id)

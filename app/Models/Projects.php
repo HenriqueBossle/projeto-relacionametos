@@ -15,6 +15,6 @@ class Projects extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'foreign_key');
     }
 }

@@ -10,7 +10,7 @@ class ClientController extends Controller
     public function index()
     {
         $client = Client::all();
-        return view('client.index', compact('client'));
+        return view('clients.index', compact('client'));
     }
 
     public function create()
@@ -20,8 +20,14 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
-        Client::create($request->all());
-        return redirect('clients')->with('success', 'Client created successfully.');
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+        ]);
+    
+        Client::create($data);
+    
+        return redirect()->route('clients.index')->with('success', 'Cliente criado com sucesso!');
     }
 
     public function edit($id)

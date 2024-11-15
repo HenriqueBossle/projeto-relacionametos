@@ -11,14 +11,14 @@ Route::get('/', function () {
 
 Route::get('projects', [ProjectsController::class,'index']);
 Route::get('projects/create', [ProjectsController::class,'create']);
-Route::post('projects', [ProjectsController::class,'store']);
-Route::get('projects/{id}/edit', [ProjectsController::class,'edit']);
-Route::put('projects/{id}', [ProjectsController::class, 'update']);
+Route::post('projects', [ProjectsController::class,'store'])->name('projects.store');
+Route::get('projects/{id}/edit', [ProjectsController::class,'edit'])->name('projects.edit');
+Route::put('projects/{id}', [ProjectsController::class, 'update'])->name('projects.update');
 Route::delete('projects/{id}', [ProjectsController::class, 'destroy']);
 
 Route::get('clients', [ClientController::class,'index']);
 Route::get('clients/create', [ClientController::class,'create']);
-Route::post('clients', [ClientController::class,'store']);
+Route::post('clients', [ClientController::class,'store'])->name('clients.store');
 Route::get('clients/{id}/edit', [ClientController::class,'edit']);
 Route::put('clients/{id}', [ClientController::class, 'update']);
 Route::delete('clients/{id}', [ClientController::class, 'destroy']);

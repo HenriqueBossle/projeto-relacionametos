@@ -14,8 +14,8 @@ class Client extends Model
         "phone",
     ];
 
-    public function user(): HasOne
+    public function user(): HasMany
     {
-        return $this->HasOne(Projects::class);
+        return $this->HasMany(Projects::class);
     }
 }
